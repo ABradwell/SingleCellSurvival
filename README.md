@@ -1,4 +1,4 @@
-# SingleCellSurvival# Simple Evolutionary Splitting program
+# Simple Evolutionary Splitting program
 
 
 ## Overview
@@ -52,17 +52,20 @@ Food will be spawned according to three types.
 //
 
 
-
-Patch One
 ## The Energy situation
-    A massive part of this program is that the creatures must die.
-    As such, their energy must tick down, only restored when they eat. 
-    This way, even if the creture NEVER splits, it WILL survive. 
+    For each creature, the distance between them and the food is converted into "how much energy is needed"
+    
+    In this situation, energy is a relative percentage drained (larger creatures SHOULD use more to move and have to move less, however that is not taken into account in this version of the program)
+    One energy unit is the equivalent to the length of the diagonal of a triangle with...
 
-    Each creature is moving on a realtive grid, where one grid-spot forward
-    represents one energy taken. One slot forward is the body size of the creature. 
+    Length ->	CREATURE SIZE
+    Height ->	CREATURE SIZE
 
-    Therefore a creature that is half the size of the ap will only need 2 energy to reach the other side. 
-    To prevent this the splitting facotr's max range must be lowered
+    Therefore, the length of one Energy Unit is the equivalent to SQRT( SIZE^2 + SIZE^2 )
 
-    A C
+    Creating a hitbox around the creature (a square with length of creature size and a height of creature size),
+    A diagonal is calculated between the bottom-left & top right corners.
+    The length of this diagonal is the equivilent of one energy unit.
+
+    All distaces between a creature and a food object are converted into these units, and each step drains the appropriate energy from the creature.
+    If the creature runs out of energy without reaching a food obejct, it will die.
